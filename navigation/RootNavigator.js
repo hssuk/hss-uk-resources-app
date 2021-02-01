@@ -11,10 +11,42 @@ const Stack = createStackNavigator();
 export default function ListStackNavigator() {
   return(
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Bauddhik" component={Bauddhik} />
-      <Stack.Screen name="Shareerik" component={Shareerik} />
-      <Stack.Screen name="Vyavastha" component={Vyavastha} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="Bauddhik"
+        component={Bauddhik}
+        options={{
+          headerStyle: {
+            backgroundColor: "#FF6721"
+          },
+          headerTintColor: 'white',
+        }}
+       />
+      <Stack.Screen
+        name="Shareerik"
+        component={Shareerik}
+        options={{
+          headerStyle: {
+            backgroundColor: "#FF6721"
+          },
+          headerTintColor: 'white',
+        }}/>
+      <Stack.Screen
+        name="Vyavastha"
+        component={Vyavastha}
+        options={{
+          headerStyle: {
+            backgroundColor: "#FF6721"
+          },
+          headerTintColor: 'white',
+        }}
+      />
     </Stack.Navigator>
   )
 }

@@ -4,16 +4,23 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { NavigationContainer } from "@react-navigation/native";
+import { default as theme } from './assets/styles/custom-theme.json';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+
+import { MaterialIconsPack } from './assets/styles/material-icons.js';
 
 import RootNavigator from './navigation/RootNavigator';
 
 export default function App() {
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
+  <>
+    <IconRegistry icons={[EvaIconsPack, MaterialIconsPack ]} />
+    <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
       <NavigationContainer>
         <RootNavigator />
       </NavigationContainer>
     </ApplicationProvider>
+  </>
   );
 }
 

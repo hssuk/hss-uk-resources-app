@@ -1,38 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { List, Card, Text, Layout, TabBar, Tab, Menu, MenuItem, MenuGroup } from '@ui-kitten/components';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View } from 'react-native';
+import { List, Card, Text, Layout, TabBar, Tab,  Icon} from '@ui-kitten/components';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-export default class Vyavastha extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedIndex: 0
-    }
-  }
 
-  setSelectedIndex(index) {
-    this.setState({selectedIndex: index});
-  }
+import CodeOfConduct from "../screens/vyavastha/CodeOfConduct.js";
+import SafeToTrustPolicy from "../screens/vyavastha/SafeToTrust.js";
+import HealthAndSafetyPolicy from "../screens/vyavastha/HealthAndSafety.js";
 
-  render() {
-    return (
-      <Layout>
-        <Menu
-          selectedIndex={this.state.selectedIndex}
-          onSelect={index => this.setSelectedIndex(index)}>
-          <MenuGroup title='Relevant Policies'>
-            <MenuItem title='Code of Conduct'>
-            </MenuItem>
-            <MenuItem title='Health and Safety'>
-            </MenuItem>
-            <MenuItem title='Registration Process'>
-            </MenuItem>
-          </MenuGroup>
-        </Menu>
-      </Layout>
-    );
-  }
+const { Navigator, Screen } = createMaterialTopTabNavigator();
+
+const TopTabBar = ({ navigation, state }) => (
+  <TabBar
+    selectedIndex={state.index}
+    onSelect={index => navigation.navigate(state.routeNames[index])}>
+    <Tab
+      title='Code of Conduct'
+    />
+    <Tab
+      title='Safe to Trust'
+    />
+    <Tab
+      title='Health & Safety'
+    />
+  </TabBar>
+);
+
+export default function Vyavastha() {
+  return (
+    <Navigator
+      tabBar={props => <TopTabBar {...props} />}
+    >
+      <Screen name='CodeOfConduct' component={CodeOfConduct} />
+      <Screen name='SafeToTrust' component={SafeToTrustPolicy} />
+      <Screen name='HealthAndSafety' component={HealthAndSafetyPolicy} />
+    </Navigator>
+  );
 }

@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { List, Card, Text, Layout, TabBar, Tab } from '@ui-kitten/components';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { List, Card, Text, Layout, TabBar, Tab, Icon } from '@ui-kitten/components';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import Admin from "../screens/shareerik/Admin.js";
@@ -15,14 +14,14 @@ const TopTabBar = ({ navigation, state }) => (
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
     <Tab
-      icon={() => (
-        <Icon size={22} name="view-grid-outline"/>
+      icon={(props) => (
+        <Icon {...props} name="grid-outline" pack="eva"/>
       )}
       title='Vishays'
     />
     <Tab
-      icon={() => (
-        <Icon size={22} name="text-box"/>
+      icon={(props) => (
+        <Icon {...props} name="file-outline" pack="eva"/>
       )}
       title='Template'
     />
