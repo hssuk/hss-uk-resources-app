@@ -136,6 +136,7 @@ export default class Vishays extends React.Component {
           isVisible={this.state.modalOpen}
           onBackButtonPress={() => this.setState({modalOpen: false, title: ""})}
           onModalHide={() => this.setState({modalOpen: false, title: ""})}
+          coverScreen={false}
         >
         {this.getDataObject(data).type == "Doc" && (
         <Layout style={{flex: 1, padding: 10, justifyContent: 'center', borderRadius: 5}}>

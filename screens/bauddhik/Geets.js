@@ -232,6 +232,7 @@ export default class Geets extends React.Component {
         <Modal
           isVisible={this.state.visible}
           onBackdropPress={() => this.setState({visible: false})}
+          coverScreen={false}
           onModalHide={() =>{
             this.setState({loadedGeet: ""}, () => this.stopAudio())
           }}
