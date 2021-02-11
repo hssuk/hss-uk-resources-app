@@ -28,33 +28,43 @@ export default class Home extends React.Component {
 
     return (
         <List
-          contentContainerStyle={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-          data={data}
-          scrollEnabled={false}
-          renderItem={({item}) => (
+          contentContainerStyle = { {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+          } }
+          data = { data }
+          scrollEnabled = { false }
+          renderItem = {  ( { item } ) => (
             <Card
-              style={{
+              style = { {
                 justifyContent: 'center',
                 alignItems: 'center',
                 aspectRatio: 1.0,
                 margin: 8,
                 height: Dimensions.get("window").height / 4
-              }}
-              onPress={() => this.props.navigation.navigate(item.route)}
+              } }
+
+              onPress = {  () => this.props.navigation.navigate( item.route ) }
             >
               <Icon
-                name={item.icon}
-                size={86}
-                style={{alignSelf: 'center'}}
+                name = { item.icon }
+                size = { 86 }
+                style = { {
+                  alignSelf: 'center'
+                } }
               />
               <Text
-                style={{alignSelf: 'center', marginTop: 8}}
+                style = { {
+                  alignSelf: 'center',
+                  marginTop: 8
+                } }
                 category='s2'
               >
-              {item.title}
+              { item.title }
               </Text>
             </Card>
-          )}
+          ) }
         />
     );
   }

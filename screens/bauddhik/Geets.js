@@ -1,6 +1,8 @@
 import React from "react";
-import { View,  AsyncStorage, FlatList, Share } from "react-native";
-import { Layout, Text, List, Card, Button, Spinner, Icon} from "@ui-kitten/components";
+//import { View,  AsyncStorage, FlatList, Share } from "react-native";
+import { View } from "react-native";
+//import { Layout, Text, List, Card, Button, Spinner, Icon} from "@ui-kitten/components";
+import { Layout, Text, List, Card, Button, Icon} from "@ui-kitten/components";
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Modal from 'react-native-modal';
@@ -30,13 +32,15 @@ const data = [
   }
 ];
 
-const DocIcon = (props) => (
-  <Icon {...props} pack="eva" name="file-text-outline"/>
+const DocIcon = ( props ) => (
+  <Icon { ...props }
+    pack="eva"
+    name="file-text-outline"/>
 );
 
 export default class Geets extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor( props ) {
+    super( props );
     this.playbackInstance = null;
     this.isSeeking = false;
     this.playAtEndOfSeek = false;
@@ -63,7 +67,7 @@ export default class Geets extends React.Component {
   }
 
   componentDidMount() {
-    Audio.setAudioModeAsync({
+    Audio.setAudioModeAsync( {
       allowsRecordingIOS: false,
       staysActiveInBackground: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -71,11 +75,10 @@ export default class Geets extends React.Component {
       shouldDuckAndroid: true,
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
       playThroughEarpieceAndroid: false
-    });
+     } );
   }
 
   async componentWillUnmount() {
-    console.log("Unmount")
     if (this.playbackInstance != null) {
       await this.playbackInstance.unloadAsync();
       this.playbackInstance = null;
@@ -83,7 +86,7 @@ export default class Geets extends React.Component {
   }
 
   async stopAudio() {
-    this.setState({
+    this.setState( {
       loadedGeet: "",
       isLoadingSound: false,
       isSoundLoaded: false,
@@ -96,40 +99,42 @@ export default class Geets extends React.Component {
       currentSoundPosition: false,
       soundLength: false,
       visible: false,
-    });
-    console.log("Audio stopped")
-    if (this.playbackInstance != null) {
+     } );
+
+    if ( this.playbackInstance != null ) {
       await this.playbackInstance.unloadAsync();
       this.playbackInstance = null;
     }
   }
 
-  async playPause(value) {
-    console.log(value);
-    var item = data.find(x => x.name == value);
-    console.log(item);
-    if (this.playbackInstance == null) {
-      this.playAudio(item, true);
+  async playPause( value ) {
+    var item = data.find( x => x.name == value );
+    if ( this.playbackInstance == null ) {
+      this.playAudio(item, true );
     } else {
-      if (item.name != this.state.currentTrack) {
+      if ( item.name != this.state.currentTrack ) {
         await this.playbackInstance.unloadAsync();
         this.playbackInstance = null;
-        this.playAudio(item, true);
+        this.playAudio( item, true );
       } else {
-        if (this.state.isPlaying) {
-          this.setState({isPlaying: false});
+        if ( this.state.isPlaying) {
+          this.setState( { isPlaying: false } );
           await this.playbackInstance.pauseAsync();
         } else {
-          this.setState({isPlaying: true});
+          this.setState( { isPlaying: true } );
           await this.playbackInstance.playAsync();
         }
       }
     }
   }
 
-  async playAudio(item, playing) {
-    this.setState({isLoadingSound: false, isSoundLoaded: false,  currentTrack: item.name})
-    const source = {uri: item.audioLink};
+  async playAudio( item, playing ) {
+    this.setState( {
+      isLoadingSound: false,
+      isSoundLoaded: false,
+      currentTrack: item.name
+    } )
+    const source = { uri: item.audioLink };
     const initStatus = {
       shouldPlay: playing,
       rate: this.state.rate,
@@ -137,49 +142,54 @@ export default class Geets extends React.Component {
       volume: this.state.volume,
       isMuted: this.state.muted,
     }
-    this.setState({isLoadingSound: true});
-    const { sound, status } = await Audio.Sound.createAsync(source, initStatus, this.onPlaybackStatusUpdate);
+    this.setState( { isLoadingSound: true } );
+    const { sound, status } = await Audio.Sound.createAsync(
+      source, initStatus,
+      this.onPlaybackStatusUpdate
+    );
     this.playbackInstance = sound;
-    this.setState({isLoadingSound: true, isSoundLoaded: true});
+    this.setState( {
+      isLoadingSound: true,
+      isSoundLoaded: true
+    } );
   }
 
-  onSliderValueChange = value => {
-    if (this.playbackInstance != null && !this.isSeeking) {
+  onSliderValueChange = () => {
+    if ( this.playbackInstance != null && !this.isSeeking ) {
       this.isSeeking = true;
       this.playAtEndOfSeek = this.state.shouldPlay;
       this.playbackInstance.pauseAsync();
     }
   }
 
-  onStateChange = (state) => {
-    if (state === "ended") {
-      this.setState({playing: false});
+  onStateChange = ( state ) => {
+    if ( state === "ended" ) {
+      this.setState( { playing: false } );
     }
   }
 
-  onSliderValueComplete = (value) => {
+  onSliderValueComplete = ( value ) => {
     if (this.playbackInstance != null) {
       this.isSeeking = false;
       const seekPosition = value * this.state.soundLength;
-      if (this.playAtEndOfSeek) {
-        this.playbackInstance.playFromPositionAsync(seekPosition);
+      if ( this.playAtEndOfSeek ) {
+        this.playbackInstance.playFromPositionAsync( seekPosition );
       } else {
-        this.playbackInstance.setPositionAsync(seekPosition);
+        this.playbackInstance.setPositionAsync( seekPosition );
       }
     }
   }
 
   getSliderPosition() {
-    if (this.playbackInstance != null && this.state.currentSoundPosition != null && this.state.soundLength != null) {
-      console.log(this.state.currentSoundPosition/ this.state.soundLength);
-      return (this.state.currentSoundPosition/this.state.soundLength);
+    if ( this.playbackInstance != null && this.state.currentSoundPosition != null && this.state.soundLength != null ) {
+      return ( this.state.currentSoundPosition/this.state.soundLength );
     }
     return 0;
   }
 
   onPlaybackStatusUpdate = status => {
-    if (status.isLoaded) {
-      this.setState({
+    if ( status.isLoaded ) {
+      this.setState( {
         currentSoundPosition: status.positionMillis,
         soundLength: status.durationMillis,
         rate: status.rate,
@@ -188,101 +198,137 @@ export default class Geets extends React.Component {
         isPlaying: status.isPlaying,
         isLooping: false,
         muted: status.muted
-      });
-      if (status.didJustFinish && !status.isLooping) {
+      } );
+
+      if ( status.didJustFinish && !status.isLooping ) {
         this.stopAudio();
-        console.log("Audio stopped: " + (status.didJustFinish) + " " +  (status.isLooping))
       }
     } else {
       if (status.error) {
-        console.log(`Error: ${status.error}`);
+        console.log(`Error: ${ status.error }`);
       }
     }
   }
 
   render() {
     return (
-      <Layout style={{ flex: 1, justifyContent: 'center', padding: 10}}>
-        <Text category="h2">Geets</Text>
-        <View style={styles.spacer}/>
+      <Layout style= {  {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 10 } }>
+        <Text category = "h2">Geets</Text>
+        <View style = { styles.spacer }/>
 
         <List
-          data={data}
-          renderItem={({item, index}) => (
+          data= { data}
+          renderItem= { ( { item, index } ) => (
           <View>
             <Card
-              status='primary'
-              style={{marginBottom: 10}}
-              header={(props) => (
-                <View {...props}>
-                  <Text category='h5'>{item.name}</Text>
-                  <Text category='s1'>Geet {index + 1}</Text>
+              status = 'primary'
+              style = { { marginBottom: 10 } }
+              header = { ( props ) => (
+                <View { ...props }>
+                  <Text category='h5'>{ item.name }</Text>
+                  <Text category='s1'>Geet { index + 1 }</Text>
                 </View>
               )}
-              footer={() => (
-                  <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
-                    <Button onPress={() => this.setState({visible: true, loadedGeet: item.name, type: item.type, videoUrl: item.audioLink})}>Play Geet</Button>
+              footer = { () => (
+                  <View style = { {
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    padding: 20
+                  } } >
+                    <Button
+                      onPress= {  () => this.setState( {
+                        visible: true,
+                        loadedGeet: item.name,
+                        type: item.type,
+                        videoUrl: item.audioLink
+                      } ) }>Play Geet</Button>
                   </View>
               )}>
-              <Button accessoryLeft={DocIcon} onPress={() => { this.setState({lyricsVisible: true, lyricsSource: item.lyricsLink})}}>View Lyrics</Button>
+              <Button
+                accessoryLeft= { DocIcon}
+                onPress= { () => { this.setState( {
+                  lyricsVisible: true,
+                  lyricsSource: item.lyricsLink
+                } ) } }>View Lyrics</Button>
             </Card>
           </View>
           )}
         />
+
         <Modal
-          isVisible={this.state.visible}
-          onBackdropPress={() => this.setState({visible: false})}
-          coverScreen={false}
-          onModalHide={() =>{
-            this.setState({loadedGeet: ""}, () => this.stopAudio())
+          isVisible = { this.state.visible}
+          onBackdropPress= {  () => this.setState( { visible: false } ) }
+          coverScreen= {  false }
+          onModalHide= {  () =>{
+            this.setState( { loadedGeet: "" }, () => this.stopAudio() )
           }}
         >
-          <Layout style={{alignItems: 'center', padding: 20, borderRadius: 5}}>
+          <Layout
+            style= {  {
+              alignItems: 'center',
+              padding: 20,
+              borderRadius: 5
+            } } >
             <Text>{this.state.loadedGeet}</Text>
-            {this.state.type == "audio" && (
-              <View style={{flexDirection: 'row'}}>
+            { this.state.type == "audio" && (
+              <View style= {  { flexDirection: 'row'} }>
                 <Button
-                  accessoryLeft={(props) => (
+                  accessoryLeft = { ( props ) => (
                     <Icon
-                      {...props}
+                      { ...props }
                       pack="material"
-                      name={this.state.isPlaying ? "pause" : "play"}
+                      name = { this.state.isPlaying ? "pause" : "play" }
                     />
                   )}
-                  onPress={() => this.playPause(this.state.loadedGeet)}
+                  onPress= {  () => this.playPause( this.state.loadedGeet ) }
                 />
                 <Slider
-                  style={{width: 200, height: 35, marginLeft: 15}}
-                  minimumValue={0}
-                  disabled={(!this.state.currentSoundPosition && !this.state.soundLength)}
-                  value={this.getSliderPosition()}
-                  maximumValue={1}
-                  onValueChange={this.onSliderValueChange}
-                  onSlidingComplete={this.onSliderValueComplete}
-                  minimumTrackTintColor="#000000"
-                  maximumTrackTintColor="#000000"
+                  style = { {
+                    width: 200,
+                    height: 35,
+                    marginLeft: 15
+                  } }
+                  minimumValue = { 0 }
+                  disabled = { ( !this.state.currentSoundPosition && !this.state.soundLength ) }
+                  value = { this.getSliderPosition() }
+                  maximumValue = { 1 }
+                  onValueChange = { this.onSliderValueChange }
+                  onSlidingComplete = { this.onSliderValueComplete }
+                  minimumTrackTintColor = "#000000"
+                  maximumTrackTintColor = "#000000"
                 />
               </View>
-            )}
-            {this.state.type == "video" &&(
+            ) }
+
+            { this.state.type == "video" && (
               <YoutubePlayer
-                height={200}
-                width={260}
-                play={this.state.videoPlaying}
-                videoId={this.state.videoUrl}
-                onChangeState={this.onStateChange}
+                height= { 200}
+                width= { 260}
+                play = { this.state.videoPlaying}
+                videoId = { this.state.videoUrl}
+                onChangeState= { this.onStateChange}
               />
-            )}
+            ) }
           </Layout>
         </Modal>
+
         <Modal
-          isVisible={this.state.lyricsVisible}
-          onBackdropPress={() => this.setState({lyricsVisible: false})}
+          isVisible = { this.state.lyricsVisible}
+          onBackdropPress= { () => this.setState( { lyricsVisible: false } ) }
         >
-          <Layout style={{justifyContent: 'center', flex: 1, padding: 10, borderWidth: 1, borderRadius: 10}}>
+          <Layout style= { {
+            justifyContent: 'center',
+            flex: 1,
+            padding: 10,
+            borderWidth: 1,
+            borderRadius: 10
+          } } >
             <WebView
-              style={{flex: 1}}
-              source={this.state.lyricsSource}
+              style= { { flex: 1 } }
+              source = { this.state.lyricsSource }
             />
           </Layout>
         </Modal>

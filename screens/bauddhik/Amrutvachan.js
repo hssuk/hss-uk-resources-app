@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Animated, FlatList, ScrollView, AsyncStorage, Share } from "react-native";
-import { Layout } from "@ui-kitten/components";
+//import { StyleSheet, View, Animated, FlatList, ScrollView, AsyncStorage, Share } from "react-native";
+//import { Layout } from "@ui-kitten/components";
 import Error404 from "../error404.js"
 
 export default class Amrutvachan extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor( props ) {
+    super( props );
   }
 
   render() {
