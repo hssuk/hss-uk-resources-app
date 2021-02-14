@@ -13,21 +13,21 @@ import YoutubePlayer from "react-native-youtube-iframe";
 
 const data = [
   {
-    name: "Shura Vayam",
+    name: "Shoora Vayam",
     lyricsLink: require("../../assets/docs/Geet1.pdf"),
-    audioLink: "http://www.geetganga.org/files/audio/shoora_vayam.mp3",
+    audioLink: "../../assets/audio/apna-ghar-ho-bhakti-dham.mp3",
     type: "audio"
   },
   {
     name: "Apna Ghar Ho",
     lyricsLink: require("../../assets/docs/Geet2.pdf"),
-    audioLink: "YL0cwzZDez8",
-    type: "video"
+    audioLink: "../../assets/audio/apna-ghar-ho-bhakti-dham.mp3",
+    type: "audio"
   },
   {
     name: "Hindu Jage Vishwa Jage",
     lyricsLink: require("../../assets/docs/Geet3.pdf"),
-    audioLink: "http://www.geetganga.org/files/audio/hindu_jage_to_vishva_jage.mp3",
+    audioLink: "../../assets/audio/hindu-jage-vishwa-jage.mp3",
     type: "audio"
   }
 ];
@@ -79,7 +79,7 @@ export default class Geets extends React.Component {
   }
 
   async componentWillUnmount() {
-    if (this.playbackInstance != null) {
+    if ( this.playbackInstance != null ) {
       await this.playbackInstance.unloadAsync();
       this.playbackInstance = null;
     }
@@ -212,7 +212,7 @@ export default class Geets extends React.Component {
 
   render() {
     return (
-      <Layout style= {  {
+      <Layout style= { {
         flex: 1,
         justifyContent: 'center',
         padding: 10 } }>
@@ -220,7 +220,7 @@ export default class Geets extends React.Component {
         <View style = { styles.spacer }/>
 
         <List
-          data= { data}
+          data= { data }
           renderItem= { ( { item, index } ) => (
           <View>
             <Card
@@ -261,8 +261,8 @@ export default class Geets extends React.Component {
         <Modal
           isVisible = { this.state.visible}
           onBackdropPress= {  () => this.setState( { visible: false } ) }
-          coverScreen= {  false }
-          onModalHide= {  () =>{
+          coverScreen= { false }
+          onModalHide= { () => {
             this.setState( { loadedGeet: "" }, () => this.stopAudio() )
           }}
         >
@@ -305,18 +305,18 @@ export default class Geets extends React.Component {
 
             { this.state.type == "video" && (
               <YoutubePlayer
-                height= { 200}
-                width= { 260}
-                play = { this.state.videoPlaying}
-                videoId = { this.state.videoUrl}
-                onChangeState= { this.onStateChange}
+                height= { 200 }
+                width= { '100%' }
+                play = { this.state.videoPlaying }
+                videoId = { this.state.videoUrl }
+                onChangeState= { this.onStateChange }
               />
             ) }
           </Layout>
         </Modal>
 
         <Modal
-          isVisible = { this.state.lyricsVisible}
+          isVisible = { this.state.lyricsVisible }
           onBackdropPress= { () => this.setState( { lyricsVisible: false } ) }
         >
           <Layout style= { {

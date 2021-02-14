@@ -9,19 +9,19 @@ export const MaterialIconsPack = {
 
 function createIconsMap() {
   return new Proxy({}, {
-    get(target, name) {
-      return IconProvider(name);
+    get( target, name ) {
+      return IconProvider( name );
     }
   });
 }
 
-const IconProvider = (name) => ({
-  toReactElement: (props) => MaterialIcon({ name, ...props }),
+const IconProvider = ( name ) => ({
+  toReactElement: ( props ) => MaterialIcon({ name, ...props }),
 });
 
 function MaterialIcon({ name, style }) {
-  const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
+  const { height, tintColor, ...iconStyle } = StyleSheet.flatten( style );
   return (
-    <Icon name={name} size={height} color={tintColor} style={iconStyle} />
+    <Icon name = { name } size = { height } color = { tintColor } style = { iconStyle } />
   );
 }

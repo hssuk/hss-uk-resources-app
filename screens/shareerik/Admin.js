@@ -10,14 +10,10 @@ export default class Admin extends React.Component {
   }
 
   render() {
-    const source = {
-      uri: 'https://drive.google.com/file/d/1epD4b1F_CpOxDb7GJvWzYHELnntPrt3v/view?usp=sharing',
-      cache: true
-    }
     return (
       <WebView
-        source={ {
-          uri: 'https://drive.google.com/file/d/1epD4b1F_CpOxDb7GJvWzYHELnntPrt3v/view'
+        source = { {
+          uri: 'https://drive.google.com/file/d/1OrjlmX_nSBX9cZmJmvQpI4lHDttObPL/view?usp=sharing'
         } }
       />
     );

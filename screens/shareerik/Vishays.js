@@ -38,7 +38,7 @@ export default class Vishays extends React.Component {
     if ( this.state.title == "" ) {
       return (
         <Layout>
-          <Text>There is no resource selected yet!!</Text>
+          <Text>There is no resource selected yet</Text>
         </Layout>
        );
     } else {
@@ -94,17 +94,17 @@ export default class Vishays extends React.Component {
       {
         title: "Warmups",
         type: "Doc",
-        url: "https://drive.google.com/file/d/1uQC_VqDVEsQpqth3LGxxQ_8CKBW-oWg6/view?usp=sharing"
+        url: "https://drive.google.com/file/d/16cGXmAyDHZKhPmBcIp0zwDZLdukrueD7/view?usp=sharing"
       },
       {
         title: "Fitness (Tarun/Yuva)",
         type: "Doc",
-        url: "https://drive.google.com/file/d/1TD5s2FGWiJQN73ZkCqeTLOSei6IPnmMs/view?usp=sharing"
+        url: "https://drive.google.com/file/d/14kC9ACxUjAqpfS74ouH7hZaaqczRg8aK/view?usp=sharing"
       },
       {
         title: "Fitness (Kishor)",
         type: "Doc",
-        url: "https://drive.google.com/file/d/1Ku3AmZKP-9gk_1T5C0p5ydhTifIKSv7c/view"
+        url: "https://drive.google.com/file/d/1j94T4fsgjL4GgJ76B4CNdXeQFnYOURwK/view?usp=sharing"
       },
     ];
 
@@ -164,7 +164,7 @@ export default class Vishays extends React.Component {
             title = { () => <Text style = { {
               margin: 10,
               fontSize: 20
-            } }>Niyuddha</Text> }>
+            } }>Ni-Yuddha</Text> }>
 
             <MenuItem
               title = 'Prathmik (Video)'
@@ -251,7 +251,7 @@ export default class Vishays extends React.Component {
               flex: 1,
               borderRadius: 5
             } }
-            source = { { uri: 'https://drive.google.com/file/d/1epD4b1F_CpOxDb7GJvWzYHELnntPrt3v/view' } } />
+            source = { { uri: 'https://drive.google.com/file/d/1OrjlmX_nSBX9cZmJmvQpI4lHDttObPLm/view?usp=sharing' } } />
 
           <Layout
             style = { {
@@ -279,11 +279,11 @@ export default class Vishays extends React.Component {
           } }>
 
             <YoutubePlayer
-              height= { 262 }
-              width= { 350 }
-              play= { this.state.playing }
-              videoId= { this.getDataObject( data ).url }
-              onChangeState= { this.onStateChange }
+              height = { 280 }
+              width = { '100%' }
+              play = { this.state.playing }
+              videoId = { this.getDataObject( data ).url }
+              onChangeState = { this.onStateChange }
             />
 
             <Button
@@ -301,10 +301,3 @@ export default class Vishays extends React.Component {
      );
   }
 }
-
-const styles = StyleSheet.create( {
-  modal: {
-    width: 500,
-    height: 300
-  }
-} )
