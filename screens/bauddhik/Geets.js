@@ -15,19 +15,19 @@ const data = [
   {
     name: "Shoora Vayam",
     lyricsLink: require("../../assets/docs/Geet1.pdf"),
-    audioLink: "../../assets/audio/apna-ghar-ho-bhakti-dham.mp3",
+    audioLink: require("../../assets/audio/shoora-vayam.mp3"),
     type: "audio"
   },
   {
     name: "Apna Ghar Ho",
     lyricsLink: require("../../assets/docs/Geet2.pdf"),
-    audioLink: "../../assets/audio/apna-ghar-ho-bhakti-dham.mp3",
+    audioLink: require("../../assets/audio/apna-ghar-ho-bhakti-dham.mp3"),
     type: "audio"
   },
   {
     name: "Hindu Jage Vishwa Jage",
     lyricsLink: require("../../assets/docs/Geet3.pdf"),
-    audioLink: "../../assets/audio/hindu-jage-vishwa-jage.mp3",
+    audioLink: require("../../assets/audio/hindu-jage-vishwa-jage.mp3"),
     type: "audio"
   }
 ];
@@ -134,7 +134,7 @@ export default class Geets extends React.Component {
       isSoundLoaded: false,
       currentTrack: item.name
     } )
-    const source = { uri: item.audioLink };
+    const source = item.audioLink;
     const initStatus = {
       shouldPlay: playing,
       rate: this.state.rate,
